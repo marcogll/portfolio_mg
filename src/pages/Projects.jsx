@@ -30,7 +30,7 @@ const PROJECTS = [
     subtitleEs: "Landing médica",
     description: "ObGyn linktree-style redirect landing page to consultation, information, and contact.",
     descriptionEs: "Landing page estilo Linktree para redirección a consulta, información y contacto.",
-    link: "https://daniela-flores.soul23.mx/",
+    link: "https://dradfg.soul23.mx/",
   },
   {
     imageUrl: "/gloria_n.png",
