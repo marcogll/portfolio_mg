@@ -1,23 +1,18 @@
 import profileOriginal from "../assets/profile.jpg";
 import mg1 from "../assets/profile_pictures/mg_1.png";
-import mg2 from "../assets/profile_pictures/mg_2.png";
 import mg3 from "../assets/profile_pictures/mg_3.png";
 import mg4 from "../assets/profile_pictures/mg_4.png";
 import mg5 from "../assets/profile_pictures/mg_5.png";
 import mg6 from "../assets/profile_pictures/mg_6.png";
 import mg7 from "../assets/profile_pictures/mg_7.png";
 import mg8 from "../assets/profile_pictures/mg_8.png";
-import mg9 from "../assets/profile_pictures/mg_9.png";
 import mg10 from "../assets/profile_pictures/mg_10.png";
 import mg11 from "../assets/profile_pictures/mg_11.png";
 import mg12 from "../assets/profile_pictures/mg_12.png";
 import mg13 from "../assets/profile_pictures/mg_13.png";
-import mg14 from "../assets/profile_pictures/mg_14.png";
 import mg15 from "../assets/profile_pictures/mg_15.png";
 import mg16 from "../assets/profile_pictures/mg_16.png";
 import mg17 from "../assets/profile_pictures/mg_17.png";
-import mg18 from "../assets/profile_pictures/mg_18.png";
-import mg19 from "../assets/profile_pictures/mg_19.png";
 import mg20 from "../assets/profile_pictures/mg_20.png";
 import CopyEmailButton from "./CopyEmailButton";
 import { getConfigData } from "../data/configReader";
@@ -25,7 +20,7 @@ import { useLanguage } from "../context/LanguageContext";
 import { useState, useEffect } from "react";
 import ContactModal from "./ContactModal";
 
-const profileImages = [mg1, mg2, mg3, mg4, mg5, mg6, mg7, mg8, mg9, mg10, mg11, mg12, mg13, mg14, mg15, mg16, mg17, mg18, mg19, mg20];
+const profileImages = [mg1, mg3, mg4, mg5, mg6, mg7, mg8, mg10, mg11, mg12, mg13, mg15, mg16, mg17, mg20];
 
 export default function Profile() {
   const configData = getConfigData() || {};

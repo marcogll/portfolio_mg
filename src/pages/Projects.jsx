@@ -30,7 +30,7 @@ const PROJECTS = [
     subtitleEs: "Landing médica",
     description: "ObGyn linktree-style redirect landing page to consultation, information, and contact.",
     descriptionEs: "Landing page estilo Linktree para redirección a consulta, información y contacto.",
-    link: "https://daniela-flores.soul23.cloud/",
+    link: "https://daniela-flores.soul23.mx/",
   },
   {
     imageUrl: "/gloria_n.png",
@@ -40,7 +40,7 @@ const PROJECTS = [
     subtitleEs: "Website · Web App",
     description: "Website with companion app for scheduling, patient records, therapist logs, payments, course integration, and online calendar. Try the demo!",
     descriptionEs: "Website con app companion para agendar citas, registro de pacientes, bitácora de terapeuta, pagos, integración de cursos y agenda online. ¡Prueba el demo!",
-    link: "https://gloria.soul23.cloud/",
+    link: "https://gloria.soul23.mx/",
   },
   {
     imageUrl: "/n8n.png",
@@ -50,7 +50,7 @@ const PROJECTS = [
     subtitleEs: "Survey · IA · Reportes",
     description: "Form that analyzes responses and generates actionable reports without manual entry.",
     descriptionEs: "Formulario que analiza respuestas y genera reportes accionables sin captura manual.",
-    link: "https://feedback.soul23.cloud/s/cmnhxc6620000o401c7c874q7",
+    link: "https://feedback.soul23.mx/s/cmnhxc6620000o401c7c874q7",
   },
 ];
 

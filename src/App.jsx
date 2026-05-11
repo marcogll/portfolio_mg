@@ -28,19 +28,19 @@ function App() {
       </div>
       <footer className="pb-4 flex justify-center items-center gap-x-2">
         <a
-          href="https://soul23.cloud"
+          href="https://soul23.mx"
           target="_blank"
           rel="noopener noreferrer"
           className="flex flex-col items-center gap-y-3 px-4 py-5 text-center text-sm text-gray-500 transition-colors hover:text-gray-600"
         >
           <img
             src={soul23Logo}
-            alt="soul23.cloud"
+            alt="soul23.mx"
             className="w-36 opacity-50"
           />
           <div className="space-y-1">
             <p className="text-sm font-medium text-gray-500">
-              © {new Date().getFullYear()} soul23.cloud
+              © {new Date().getFullYear()} soul23.mx
             </p>
             <p className="text-xs text-gray-400">
               {t.rightsReserved}.
