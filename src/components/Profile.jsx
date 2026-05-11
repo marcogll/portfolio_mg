@@ -1,3 +1,4 @@
+import profileOriginal from "../assets/profile.jpg";
 import mg1 from "../assets/profile_pictures/mg_1.png";
 import mg2 from "../assets/profile_pictures/mg_2.png";
 import mg3 from "../assets/profile_pictures/mg_3.png";
@@ -30,13 +31,17 @@ export default function Profile() {
   const configData = getConfigData() || {};
   const { t, toggleLang, lang } = useLanguage();
   const [showContact, setShowContact] = useState(false);
-  const [profile, setProfile] = useState(mg1);
+  const [profile, setProfile] = useState(profileOriginal);
   const isAvailable = configData.status === "on";
+
+  const changeProfileImage = () => {
+    const randomIndex = Math.floor(Math.random() * profileImages.length);
+    setProfile(profileImages[randomIndex]);
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      const randomIndex = Math.floor(Math.random() * profileImages.length);
-      setProfile(profileImages[randomIndex]);
+      changeProfileImage();
     }, 30000);
     return () => clearTimeout(timer);
   }, []);
@@ -128,7 +133,8 @@ export default function Profile() {
             <img
               src={profile}
               alt="Profile"
-              className="w-[110%] h-[100%] rounded-full object-cover object-top"
+              onClick={changeProfileImage}
+              className="w-[110%] h-[100%] rounded-full object-cover object-top cursor-pointer"
             />
           </div>
         </div>
