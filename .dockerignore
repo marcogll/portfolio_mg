@@ -1,0 +1,7 @@
+node_modules
+dist
+temp_downloads
+.env
+.git
+.gitignore
+DOWNLOADER.md

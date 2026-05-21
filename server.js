@@ -2,7 +2,7 @@ import express from 'express';
 import { readFileSync, readdirSync, statSync, existsSync, unlinkSync, createReadStream } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join, extname } from 'path';
-import { exec } from 'child_process';
+import { exec, execSync } from 'child_process';
 import { promisify } from 'util';
 import { randomUUID } from 'crypto';
 import { mkdirSync } from 'fs';
@@ -22,6 +22,15 @@ const allowedContactFields = ['name', 'email', 'phone', 'business', 'subject', '
 const tempDir = join(__dirname, 'temp_downloads');
 if (!existsSync(tempDir)) {
   mkdirSync(tempDir, { recursive: true });
+}
+
+const YTDLP_PATH = process.env.YTDLP_PATH || 'yt-dlp';
+
+try {
+  execSync(`${YTDLP_PATH} --version`, { stdio: 'ignore' });
+  console.log(`yt-dlp initialized: ${execSync(`${YTDLP_PATH} --version`).toString().trim()}`);
+} catch (err) {
+  console.error('yt-dlp not found or failed to initialize:', err.message);
 }
 
 const activeDownloads = new Map();
@@ -264,28 +273,40 @@ app.post('/api/download', async (req, res) => {
   }
 
   const downloadId = randomUUID();
-  const tempFile = join(tempDir, `${downloadId}.%(ext)s`);
-  const metaFile = join(tempDir, `${downloadId}.json`);
+  const tempFile = join(tempDir, `${downloadId}`);
 
   try {
-    await execAsync(
-      `yt-dlp --no-playlist --format "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" -o "${tempFile}" --dump-single-json "${url}"`,
+    const { stdout: metaJson, stderr: metaStderr } = await execAsync(
+      `${YTDLP_PATH} --dump-json --no-download "${url}"`,
+      { timeout: 30000, maxBuffer: 20 * 1024 * 1024 }
+    );
+
+    let info;
+    try {
+      info = JSON.parse(metaJson.trim());
+    } catch {
+      console.error('Failed to parse metadata:', metaJson.substring(0, 500));
+    }
+
+    const { stdout: downloadOutput, stderr: downloadStderr } = await execAsync(
+      `${YTDLP_PATH} --no-playlist -f "best[ext=mp4]/best" -o "${tempFile}" --merge-output-format mp4 "${url}"`,
       { timeout: 120000, maxBuffer: 10 * 1024 * 1024 }
     );
 
-    const metaPath = join(tempDir, `${downloadId}.info.json`);
-    let info;
-    if (existsSync(metaPath)) {
-      info = JSON.parse(readFileSync(metaPath, 'utf-8'));
+    const files = readdirSync(tempDir).filter(f => f.startsWith(downloadId));
+    const videoFile = files.find(f => !f.endsWith('.json') && !f.endsWith('.part') && !f.endsWith('.ytdl'));
+
+    if (!videoFile) {
+      console.error('Download files found:', files);
+      console.error('Download stderr:', downloadStderr?.substring(0, 1000));
+      for (const f of files) {
+        try { unlinkSync(join(tempDir, f)); } catch {}
+      }
+      return res.status(500).json({ error: 'Download failed - no video file created' });
     }
 
-    const actualFile = readdirSync(tempDir).find(f => f.startsWith(downloadId) && !f.endsWith('.json'));
-    if (!actualFile) {
-      return res.status(500).json({ error: 'Download failed' });
-    }
-
-    const ext = extname(actualFile).slice(1) || 'mp4';
-    const fullPath = join(tempDir, actualFile);
+    const ext = extname(videoFile).slice(1) || 'mp4';
+    const fullPath = join(tempDir, videoFile);
 
     activeDownloads.set(downloadId, {
       file: fullPath,
@@ -305,15 +326,13 @@ app.post('/api/download', async (req, res) => {
     });
   } catch (err) {
     console.error('Download error:', err.message);
+    console.error('Download stderr:', err.stderr?.substring(0, 1000));
     try {
       const files = readdirSync(tempDir).filter(f => f.startsWith(downloadId));
       for (const f of files) {
         try { unlinkSync(join(tempDir, f)); } catch {}
       }
     } catch {}
-    if (err.message.includes('yt-dlp')) {
-      return res.status(500).json({ error: 'yt-dlp not installed' });
-    }
     res.status(500).json({ error: 'Failed to process video' });
   }
 });
