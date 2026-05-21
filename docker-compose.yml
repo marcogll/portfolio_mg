@@ -7,4 +7,5 @@ services:
       - "3002:3002"
     environment:
       - TIMEZONE=America/Monterrey
+      - YTDLP_PATH=/usr/bin/yt-dlp
     restart: unless-stopped

@@ -6,6 +6,7 @@ import { useLanguage } from "../context/LanguageContext";
 const TOOLS = [
   { path: "/tools/qr", icon: "qr_code", label: "QR", labelEs: "QR" },
   { path: "/tools/token", icon: "token", label: "Token", labelEs: "Token" },
+  { path: "/tools/downloader", icon: "download", label: "Downloader", labelEs: "Descargador" },
 ];
 
 export default function Navbar() {

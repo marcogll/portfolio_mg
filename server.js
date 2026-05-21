@@ -1,7 +1,13 @@
 import express from 'express';
-import { readFileSync, readdirSync, statSync } from 'fs';
+import { readFileSync, readdirSync, statSync, existsSync, unlinkSync, createReadStream } from 'fs';
 import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+import { dirname, join, extname } from 'path';
+import { exec } from 'child_process';
+import { promisify } from 'util';
+import { randomUUID } from 'crypto';
+import { mkdirSync } from 'fs';
+
+const execAsync = promisify(exec);
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const quotes = JSON.parse(readFileSync(join(__dirname, 'src/info/quotes.json'), 'utf-8'));
@@ -12,6 +18,28 @@ const contactRateWindowMs = 15 * 60 * 1000;
 const contactRateLimitMax = 5;
 const contactAttempts = new Map();
 const allowedContactFields = ['name', 'email', 'phone', 'business', 'subject', 'message', '_lang', '_timestamp', 'website'];
+
+const tempDir = join(__dirname, 'temp_downloads');
+if (!existsSync(tempDir)) {
+  mkdirSync(tempDir, { recursive: true });
+}
+
+const activeDownloads = new Map();
+const DOWNLOAD_CLEANUP_MS = 10 * 60 * 1000;
+
+setInterval(() => {
+  const now = Date.now();
+  for (const [id, data] of activeDownloads.entries()) {
+    if (now - data.createdAt > DOWNLOAD_CLEANUP_MS) {
+      try {
+        if (existsSync(data.file)) {
+          unlinkSync(data.file);
+        }
+      } catch {}
+      activeDownloads.delete(id);
+    }
+  }
+}, 60000).unref();
 
 const app = express();
 const PORT = process.env.PORT || 3002;
@@ -220,6 +248,122 @@ app.get('/api/quote', (req, res) => {
   const phrases = quotes.phrases;
   const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
   res.json({ phrase: randomPhrase });
+});
+
+app.post('/api/download', async (req, res) => {
+  const { url } = req.body;
+
+  if (!url || typeof url !== 'string' || !url.startsWith('http')) {
+    return res.status(400).json({ error: 'Invalid URL' });
+  }
+
+  const supportedDomains = ['tiktok.com', 'instagram.com', 'facebook.com', 'fb.watch', 'twitter.com', 'x.com'];
+  const isSupported = supportedDomains.some(domain => url.includes(domain));
+  if (!isSupported) {
+    return res.status(400).json({ error: 'Unsupported platform' });
+  }
+
+  const downloadId = randomUUID();
+  const tempFile = join(tempDir, `${downloadId}.%(ext)s`);
+  const metaFile = join(tempDir, `${downloadId}.json`);
+
+  try {
+    await execAsync(
+      `yt-dlp --no-playlist --format "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" -o "${tempFile}" --dump-single-json "${url}"`,
+      { timeout: 120000, maxBuffer: 10 * 1024 * 1024 }
+    );
+
+    const metaPath = join(tempDir, `${downloadId}.info.json`);
+    let info;
+    if (existsSync(metaPath)) {
+      info = JSON.parse(readFileSync(metaPath, 'utf-8'));
+    }
+
+    const actualFile = readdirSync(tempDir).find(f => f.startsWith(downloadId) && !f.endsWith('.json'));
+    if (!actualFile) {
+      return res.status(500).json({ error: 'Download failed' });
+    }
+
+    const ext = extname(actualFile).slice(1) || 'mp4';
+    const fullPath = join(tempDir, actualFile);
+
+    activeDownloads.set(downloadId, {
+      file: fullPath,
+      title: info?.title || 'Video',
+      thumbnail: info?.thumbnail || null,
+      duration: info?.duration_string || null,
+      ext,
+      createdAt: Date.now(),
+    });
+
+    res.json({
+      id: downloadId,
+      title: info?.title || 'Video',
+      thumbnail: info?.thumbnail || null,
+      duration: info?.duration_string || null,
+      ext,
+    });
+  } catch (err) {
+    console.error('Download error:', err.message);
+    try {
+      const files = readdirSync(tempDir).filter(f => f.startsWith(downloadId));
+      for (const f of files) {
+        try { unlinkSync(join(tempDir, f)); } catch {}
+      }
+    } catch {}
+    if (err.message.includes('yt-dlp')) {
+      return res.status(500).json({ error: 'yt-dlp not installed' });
+    }
+    res.status(500).json({ error: 'Failed to process video' });
+  }
+});
+
+app.get('/api/download/:id', (req, res) => {
+  const { id } = req.params;
+  const download = activeDownloads.get(id);
+
+  if (!download || !existsSync(download.file)) {
+    activeDownloads.delete(id);
+    return res.status(404).json({ error: 'Download expired or not found' });
+  }
+
+  const stat = statSync(download.file);
+  const mimeType = download.ext === 'mp4' ? 'video/mp4' : download.ext === 'webm' ? 'video/webm' : 'application/octet-stream';
+
+  res.setHeader('Content-Type', mimeType);
+  res.setHeader('Content-Length', stat.size);
+  res.setHeader('Content-Disposition', `attachment; filename="${encodeURIComponent(download.title)}.${download.ext}"`);
+
+  const stream = createReadStream(download.file);
+
+  stream.on('end', () => {
+    try { unlinkSync(download.file); } catch {}
+    activeDownloads.delete(id);
+  });
+
+  stream.on('error', () => {
+    try { unlinkSync(download.file); } catch {}
+    activeDownloads.delete(id);
+  });
+
+  stream.pipe(res);
+});
+
+app.get('/api/download/:id/meta', (req, res) => {
+  const { id } = req.params;
+  const download = activeDownloads.get(id);
+
+  if (!download) {
+    return res.status(404).json({ error: 'Not found' });
+  }
+
+  res.json({
+    title: download.title,
+    thumbnail: download.thumbnail,
+    duration: download.duration,
+    ext: download.ext,
+    url: `/api/download/${id}`,
+  });
 });
 
 app.post('/api/contact', enforceContactRateLimit, async (req, res) => {

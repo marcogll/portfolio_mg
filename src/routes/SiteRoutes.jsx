@@ -5,6 +5,7 @@ import Projects from "../pages/Projects";
 import ApiScripts from "../pages/ApiScripts";
 import QrGenerator from "../pages/QrGenerator";
 import TokenGenerator from "../pages/TokenGenerator";
+import VideoDownloader from "../pages/VideoDownloader";
 import PageNotFound from "../pages/PageNotFound";
 
 export default function SiteRoutes() {
@@ -16,6 +17,7 @@ export default function SiteRoutes() {
       <Route path="/api/scripts" element={<ApiScripts />} />
       <Route path="/tools/qr" element={<QrGenerator />} />
       <Route path="/tools/token" element={<TokenGenerator />} />
+      <Route path="/tools/downloader" element={<VideoDownloader />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
