@@ -14,6 +14,7 @@ export default function VideoDownloader() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [result, setResult] = useState(null);
+  const [downloading, setDownloading] = useState(false);
 
   const detectPlatform = (link) => {
     if (link.includes("tiktok.com")) return "tiktok";
@@ -67,6 +68,28 @@ export default function VideoDownloader() {
       setError("");
     } catch {
       setError(lang === "es" ? "No se pudo leer el portapapeles" : "Could not read clipboard");
+    }
+  };
+
+  const handleFileDownload = async () => {
+    if (!result?.id) return;
+    setDownloading(true);
+    try {
+      const res = await fetch(`/api/download/${result.id}`);
+      if (!res.ok) throw new Error("Download failed");
+      const blob = await res.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = downloadUrl;
+      a.download = `${result.title || "video"}.${result.ext || "mp4"}`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(downloadUrl);
+    } catch {
+      setError(lang === "es" ? "Error al descargar el archivo" : "Failed to download file");
+    } finally {
+      setDownloading(false);
     }
   };
 
@@ -181,28 +204,24 @@ export default function VideoDownloader() {
               </div>
             )}
 
-            {result.downloadUrl && (
-              <a
-                href={result.downloadUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full py-3 px-4 bg-green-600 text-white rounded-lg font-medium text-sm hover:bg-green-700 transition-all"
+            {result.id && (
+              <button
+                type="button"
+                onClick={handleFileDownload}
+                disabled={downloading}
+                className={`flex items-center justify-center gap-2 w-full py-3 px-4 rounded-lg font-medium text-sm transition-all ${
+                  downloading
+                    ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                    : "bg-green-600 text-white hover:bg-green-700"
+                }`}
               >
-                <span className="material-symbols-rounded text-base">download</span>
-                {lang === "es" ? "Descargar Video" : "Download Video"}
-              </a>
-            )}
-
-            {result.audioUrl && (
-              <a
-                href={result.audioUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full py-3 px-4 bg-blue-600 text-white rounded-lg font-medium text-sm hover:bg-blue-700 transition-all"
-              >
-                <span className="material-symbols-rounded text-base">audio_file</span>
-                {lang === "es" ? "Descargar Audio" : "Download Audio"}
-              </a>
+                <span className="material-symbols-rounded text-base">
+                  {downloading ? "progress_activity" : "download"}
+                </span>
+                {downloading
+                  ? lang === "es" ? "Descargando..." : "Downloading..."
+                  : lang === "es" ? "Descargar Video" : "Download Video"}
+              </button>
             )}
           </div>
         )}
