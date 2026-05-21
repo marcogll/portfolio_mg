@@ -244,6 +244,70 @@ docker-compose up -d
 
 El sitio soporta inglés y Español. El cambio se hace desde el botón de bandera en el navbar.
 
+## Tools
+
+### QR Generator
+
+`/tools/qr` — Genera códigos QR para URLs o WiFi con múltiples estilos.
+
+### Token Generator
+
+`/tools/token` — Genera tokens aleatorios seguros (10-128 caracteres).
+
+### Video Downloader
+
+`/tools/downloader` — Descarga videos de TikTok, Instagram, Facebook y X.
+
+Requiere `yt-dlp` y `ffmpeg` instalados en el servidor. El Dockerfile ya los incluye.
+
+#### Instalación local
+
+```bash
+# macOS
+brew install yt-dlp ffmpeg
+
+# Linux (Debian/Ubuntu)
+sudo apt install yt-dlp ffmpeg
+
+# Windows
+winget install yt-dlp ffmpeg
+```
+
+#### Cómo funciona
+
+1. Pegas el enlace del video
+2. El backend descarga el video a un directorio temporal
+3. Se muestra el título y thumbnail
+4. Al dar click en "Descargar Video", el archivo se envía y se elimina automáticamente del servidor
+
+Videos expiran a los 10 minutos si no se descargan.
+
+#### Endpoints
+
+| Ruta | Método | Descripción |
+|------|--------|-------------|
+| `POST /api/download` | POST | Procesa un enlace y descarga el video al servidor |
+| `GET /api/download/:id` | GET | Sirve el archivo descargado y lo elimina |
+| `GET /api/download/:id/meta` | GET | Regresa metadata del video (título, thumbnail, duración) |
+
+Payload de `POST /api/download`:
+```json
+{
+  "url": "https://www.tiktok.com/@user/video/123456"
+}
+```
+
+Respuesta:
+```json
+{
+  "id": "uuid",
+  "title": "Video title",
+  "thumbnail": "https://...",
+  "duration": "0:30",
+  "ext": "mp4"
+}
+```
+
 ## Footer
 
 ---
