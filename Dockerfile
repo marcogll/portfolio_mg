@@ -1,13 +1,12 @@
 FROM node:20-alpine
 
-RUN apk add --no-cache python3 pip
+RUN apk add --no-cache python3 py3-pip ffmpeg && \
+    pip install yt-dlp --break-system-packages --root-user-action=ignore
 
 WORKDIR /app
 
 COPY package*.json ./
 RUN npm install
-
-RUN pip install yt-dlp --break-system-packages
 
 COPY . .
 RUN npm run build
