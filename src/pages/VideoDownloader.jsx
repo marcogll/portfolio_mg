@@ -14,7 +14,6 @@ export default function VideoDownloader() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [result, setResult] = useState(null);
-  const [downloading, setDownloading] = useState(false);
 
   const detectPlatform = (link) => {
     if (link.includes("tiktok.com")) return "tiktok";
@@ -71,26 +70,14 @@ export default function VideoDownloader() {
     }
   };
 
-  const handleFileDownload = async () => {
+  const handleFileDownload = () => {
     if (!result?.id) return;
-    setDownloading(true);
-    try {
-      const res = await fetch(`/api/download/${result.id}`);
-      if (!res.ok) throw new Error("Download failed");
-      const blob = await res.blob();
-      const downloadUrl = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = downloadUrl;
-      a.download = `${result.title || "video"}.${result.ext || "mp4"}`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(downloadUrl);
-    } catch {
-      setError(lang === "es" ? "Error al descargar el archivo" : "Failed to download file");
-    } finally {
-      setDownloading(false);
-    }
+    const a = document.createElement("a");
+    a.href = `/api/download/${result.id}`;
+    a.download = `${result.title || "video"}.${result.ext || "mp4"}`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   };
 
   return (
@@ -208,19 +195,10 @@ export default function VideoDownloader() {
               <button
                 type="button"
                 onClick={handleFileDownload}
-                disabled={downloading}
-                className={`flex items-center justify-center gap-2 w-full py-3 px-4 rounded-lg font-medium text-sm transition-all ${
-                  downloading
-                    ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                    : "bg-green-600 text-white hover:bg-green-700"
-                }`}
+                className="flex items-center justify-center gap-2 w-full py-3 px-4 bg-green-600 text-white rounded-lg font-medium text-sm hover:bg-green-700 transition-all"
               >
-                <span className="material-symbols-rounded text-base">
-                  {downloading ? "progress_activity" : "download"}
-                </span>
-                {downloading
-                  ? lang === "es" ? "Descargando..." : "Downloading..."
-                  : lang === "es" ? "Descargar Video" : "Download Video"}
+                <span className="material-symbols-rounded text-base">download</span>
+                {lang === "es" ? "Descargar Video" : "Download Video"}
               </button>
             )}
           </div>
