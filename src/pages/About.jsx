@@ -3,6 +3,7 @@ import { getConfigData } from "../data/configReader";
 import { useLanguage } from "../context/LanguageContext";
 import { useState } from "react";
 import ContactModal from "../components/ContactModal";
+import CvModal from "../components/CvModal";
 
 const SKILLS = [
   {
@@ -77,6 +78,7 @@ export default function About() {
   const configData = getConfigData() || {};
   const { t, lang } = useLanguage();
   const [showContact, setShowContact] = useState(false);
+  const [showCv, setShowCv] = useState(false);
 
   const aboutDesc = lang === "es" && configData.aboutDescEs ? configData.aboutDescEs : (configData.aboutDesc || "");
 
@@ -130,12 +132,21 @@ export default function About() {
               </span>
               {t.hireMe}
             </button>
+            <button
+              type="button"
+              onClick={() => setShowCv(true)}
+              className="inline-flex items-center gap-x-1 px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-all"
+            >
+              <span className="material-symbols-rounded text-sm">description</span>
+              {t.viewCv || "CV"}
+            </button>
             <CopyEmailButton className="mr-0 mb-0" />
           </div>
         </div>
       </div>
 
       <ContactModal isOpen={showContact} onClose={() => setShowContact(false)} />
+      <CvModal isOpen={showCv} onClose={() => setShowCv(false)} />
     </>
   );
 }
