@@ -107,12 +107,12 @@ export default function About() {
         </div>
       </div>
 
-      <div className="flex items-center justify-center py-4 px-4 max-w-3xl mx-auto">
-        <div className="flex flex-wrap items-center justify-center gap-3">
+      <div className="flex justify-center px-4 max-w-3xl mx-auto">
+        <div className="flex flex-wrap items-center justify-center gap-2">
           <button
             type="button"
             onClick={() => setShowContact(true)}
-            className="inline-flex items-center gap-x-1 px-4 py-2 text-sm font-medium text-white bg-black border border-black rounded-md hover:bg-gray-800 transition-all shadow-md"
+            className="inline-flex items-center gap-x-1 px-3 py-1.5 text-sm font-medium text-white bg-black border border-black rounded-md hover:bg-gray-800 transition-all"
           >
             <span className="material-symbols-rounded text-sm">handshake</span>
             {t.hireMe}
@@ -120,7 +120,7 @@ export default function About() {
           <button
             type="button"
             onClick={() => setShowCv(true)}
-            className="inline-flex items-center gap-x-1 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-all shadow-sm"
+            className="inline-flex items-center gap-x-1 px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-all"
           >
             <span className="material-symbols-rounded text-sm">description</span>
             {t.viewCv || "CV"}
