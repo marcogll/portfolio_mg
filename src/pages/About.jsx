@@ -107,7 +107,24 @@ export default function About() {
         </div>
       </div>
 
-      <div className="flex justify-center px-4 max-w-3xl mx-auto">
+      <div className="px-4 py-6 max-w-3xl mx-auto">
+        <div className="flex flex-col gap-4">
+          {SKILLS.map((category, index) => (
+            <SkillCategory key={index} category={category} />
+          ))}
+        </div>
+      </div>
+
+      <div className="flex flex-col items-center justify-center py-8 px-4 max-w-3xl mx-auto">
+        <h1 className="text-3xl font-semibold text-center">
+          {t.letsWork}
+        </h1>
+        <p className="text-sm md:text-lg text-gray-500 mt-2">
+          {t.crafting}
+        </p>
+      </div>
+
+      <div className="flex justify-center pb-8 px-4 max-w-3xl mx-auto">
         <div className="flex flex-wrap items-center justify-center gap-2">
           <button
             type="button"
@@ -125,25 +142,8 @@ export default function About() {
             <span className="material-symbols-rounded text-sm">description</span>
             {t.viewCv || "CV"}
           </button>
-          <CopyEmailButton className="mr-0 mb-0" />
+          <CopyEmailButton />
         </div>
-      </div>
-
-      <div className="px-4 py-6 max-w-3xl mx-auto">
-        <div className="flex flex-col gap-4">
-          {SKILLS.map((category, index) => (
-            <SkillCategory key={index} category={category} />
-          ))}
-        </div>
-      </div>
-
-      <div className="flex flex-col items-center justify-center py-8 px-4 max-w-3xl mx-auto">
-        <h1 className="text-3xl font-semibold text-center">
-          {t.letsWork}
-        </h1>
-        <p className="text-sm md:text-lg text-gray-500 mt-2">
-          {t.crafting}
-        </p>
       </div>
 
       <ContactModal isOpen={showContact} onClose={() => setShowContact(false)} />

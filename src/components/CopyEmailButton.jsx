@@ -23,7 +23,7 @@ function CopyEmailButton({ className = "" }) {
     <button
       onClick={copyToClipboard}
       className={
-        "inline-flex items-center gap-x-1 px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-md " +
+        "inline-flex items-center gap-x-1 px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-md mr-2 mb-2 " +
         className
       }
     >
