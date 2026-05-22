@@ -11,6 +11,9 @@ const SKILLS = [
     categoryEs: "Experiencia Central",
     items: [
       { name: "Process Automation", nameEs: "Automatización de Procesos", score: 10 },
+      { name: "Plastics & LSR Molding", nameEs: "Moldeo de Plásticos y LSR", score: 10 },
+      { name: "Troubleshooting", nameEs: "Resolución de Problemas", score: 10 },
+      { name: "Molding Personnel Training", nameEs: "Capacitación en Moldeo", score: 10 },
       { name: "Process Optimization", nameEs: "Optimización de Procesos", score: 9 },
       { name: "Manufacturing Business Management", nameEs: "Gestión de Negocios de Manufactura", score: 9 },
       { name: "Mechatronics Engineering", nameEs: "Ingeniería Mecatrónica", score: 9 },
@@ -21,6 +24,7 @@ const SKILLS = [
     categoryEs: "Desarrollo y Tech Stack",
     items: [
       { name: "Bots & Scripts", nameEs: "Bots y Scripts", score: 10 },
+      { name: "AI Implementation", nameEs: "Implementación de IA", score: 10 },
       { name: "Python & Node.js", nameEs: "Python & Node.js", score: 9.5 },
       { name: "Frontend (HTML, CSS, JS)", nameEs: "Frontend (HTML, CSS, JS)", score: 8 },
     ],
@@ -31,7 +35,8 @@ const SKILLS = [
     items: [
       { name: "Hosting", nameEs: "Hosting", score: 10 },
       { name: "Online & Remote Support", nameEs: "Soporte Online y Remoto", score: 10 },
-      { name: "Docker, Kubernetes & Servers", nameEs: "Docker, Kubernetes y Servidores", score: 8 },
+      { name: "Content Creation", nameEs: "Creación de Contenido", score: 10 },
+      { name: "Docker, MCP & Servers", nameEs: "Docker, MCP y Servidores", score: 8 },
     ],
   },
 ];
@@ -102,6 +107,28 @@ export default function About() {
         </div>
       </div>
 
+      <div className="flex items-center justify-center py-4 px-4 max-w-3xl mx-auto">
+        <div className="flex flex-wrap items-center justify-center gap-3">
+          <button
+            type="button"
+            onClick={() => setShowContact(true)}
+            className="inline-flex items-center gap-x-1 px-4 py-2 text-sm font-medium text-white bg-black border border-black rounded-md hover:bg-gray-800 transition-all shadow-md"
+          >
+            <span className="material-symbols-rounded text-sm">handshake</span>
+            {t.hireMe}
+          </button>
+          <button
+            type="button"
+            onClick={() => setShowCv(true)}
+            className="inline-flex items-center gap-x-1 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-all shadow-sm"
+          >
+            <span className="material-symbols-rounded text-sm">description</span>
+            {t.viewCv || "CV"}
+          </button>
+          <CopyEmailButton className="mr-0 mb-0" />
+        </div>
+      </div>
+
       <div className="px-4 py-6 max-w-3xl mx-auto">
         <div className="flex flex-col gap-4">
           {SKILLS.map((category, index) => (
@@ -117,32 +144,6 @@ export default function About() {
         <p className="text-sm md:text-lg text-gray-500 mt-2">
           {t.crafting}
         </p>
-      </div>
-
-      <div className="flex md:flex-row items-center justify-center py-8 px-4 max-w-3xl mx-auto">
-        <div className="flex flex-col gap-y-2 w-full md:w-auto">
-          <div className="flex items-center justify-center gap-4">
-            <button
-              type="button"
-              onClick={() => setShowContact(true)}
-              className="inline-flex items-center gap-x-1 px-3 py-1.5 text-sm font-medium text-white bg-black border border-black rounded-md relative overflow-hidden shadow-md transition-all"
-            >
-              <span className="material-symbols-rounded text-sm">
-                handshake
-              </span>
-              {t.hireMe}
-            </button>
-            <button
-              type="button"
-              onClick={() => setShowCv(true)}
-              className="inline-flex items-center gap-x-1 px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-all"
-            >
-              <span className="material-symbols-rounded text-sm">description</span>
-              {t.viewCv || "CV"}
-            </button>
-            <CopyEmailButton className="mr-0 mb-0" />
-          </div>
-        </div>
       </div>
 
       <ContactModal isOpen={showContact} onClose={() => setShowContact(false)} />
