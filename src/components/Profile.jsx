@@ -15,6 +15,7 @@ import mg16 from "../assets/profile_pictures/mg_16.png";
 import mg17 from "../assets/profile_pictures/mg_17.png";
 import mg20 from "../assets/profile_pictures/mg_20.png";
 import CopyEmailButton from "./CopyEmailButton";
+import CvModal from "./CvModal";
 import { getConfigData } from "../data/configReader";
 import { useLanguage } from "../context/LanguageContext";
 import { useState, useEffect } from "react";
@@ -26,6 +27,7 @@ export default function Profile() {
   const configData = getConfigData() || {};
   const { t, toggleLang, lang } = useLanguage();
   const [showContact, setShowContact] = useState(false);
+  const [showCv, setShowCv] = useState(false);
   const [profile, setProfile] = useState(profileOriginal);
   const isAvailable = configData.status === "on";
 
@@ -119,6 +121,14 @@ export default function Profile() {
               </span>
               {t.hireMe}
             </button>
+            <button
+              type="button"
+              onClick={() => setShowCv(true)}
+              className="inline-flex items-center gap-x-1 px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-all"
+            >
+              <span className="material-symbols-rounded text-sm">description</span>
+              {t.viewCv || "CV"}
+            </button>
             <CopyEmailButton />
           </div>
         </div>
@@ -136,6 +146,7 @@ export default function Profile() {
       </div>
 
       <ContactModal isOpen={showContact} onClose={() => setShowContact(false)} />
+      <CvModal isOpen={showCv} onClose={() => setShowCv(false)} />
     </>
   );
 }

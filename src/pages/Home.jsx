@@ -1,12 +1,9 @@
-import { useState } from "react";
 import Profile from "../components/Profile";
 import Projects from "../components/Projects";
-import CvModal from "../components/CvModal";
 import { useLanguage } from "../context/LanguageContext";
 
 export default function Home() {
   const { t } = useLanguage();
-  const [showCv, setShowCv] = useState(false);
 
   return (
     <>
@@ -19,15 +16,7 @@ export default function Home() {
         <p className="text-sm md:text-lg text-gray-500 mt-2">
           {t.understanding}
         </p>
-        <button
-          type="button"
-          onClick={() => setShowCv(true)}
-          className="mt-5 text-sm text-gray-400 hover:text-gray-600 underline underline-offset-2 transition-colors"
-        >
-          {t.viewCv || "CV"} / Resume →
-        </button>
       </div>
-      <CvModal isOpen={showCv} onClose={() => setShowCv(false)} />
     </>
   );
 }
