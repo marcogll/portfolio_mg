@@ -121,15 +121,16 @@ export default function Profile() {
               </span>
               {t.hireMe}
             </button>
+            <button
+              type="button"
+              onClick={() => setShowCv(true)}
+              className="inline-flex items-center gap-x-1 px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-all"
+            >
+              <span className="material-symbols-rounded text-sm">description</span>
+              {t.viewCv || "CV"}
+            </button>
             <CopyEmailButton />
           </div>
-          <button
-            type="button"
-            onClick={() => setShowCv(true)}
-            className="mt-1 text-xs text-gray-400 hover:text-gray-600 underline underline-offset-2 transition-colors self-start"
-          >
-            {t.viewCv || "CV"} →
-          </button>
         </div>
 
         <div className="rounded-full p-1 flex items-center justify-center mb-4 sm:mb-5 md:mb-7">
