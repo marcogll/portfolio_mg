@@ -30,7 +30,7 @@ export const translations = {
     sending: "Sending...",
     successMessage: "Message sent successfully!",
     errorMessage: "Error sending message. Try again.",
-    viewCv: "CV",
+    viewCv: "Resume",
     rightsReserved: "All rights reserved",
     footerLegal: "Website, content and brand assets protected.",
   },
