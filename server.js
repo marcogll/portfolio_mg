@@ -266,7 +266,7 @@ app.post('/api/download', async (req, res) => {
     return res.status(400).json({ error: 'Invalid URL' });
   }
 
-  const supportedDomains = ['tiktok.com', 'instagram.com', 'facebook.com', 'fb.watch', 'twitter.com', 'x.com'];
+  const supportedDomains = ['youtube.com', 'youtu.be', 'tiktok.com', 'instagram.com', 'facebook.com', 'fb.watch', 'twitter.com', 'x.com'];
   const isSupported = supportedDomains.some(domain => url.includes(domain));
   if (!isSupported) {
     return res.status(400).json({ error: 'Unsupported platform' });

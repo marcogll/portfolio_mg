@@ -44,6 +44,7 @@ export default function VideoDownloader() {
   const [result, setResult] = useState(null);
 
   const detectPlatform = (link) => {
+    if (link.includes("youtube.com") || link.includes("youtu.be")) return "youtube";
     if (link.includes("tiktok.com")) return "tiktok";
     if (link.includes("instagram.com")) return "instagram";
     if (link.includes("facebook.com") || link.includes("fb.watch")) return "facebook";
@@ -117,8 +118,8 @@ export default function VideoDownloader() {
 
       <p className="text-sm text-gray-600 mb-4">
         {lang === "es"
-          ? "Descarga videos de TikTok, Instagram, Facebook y X."
-          : "Download videos from TikTok, Instagram, Facebook and X."}
+          ? "Descarga videos de YouTube (Shorts, Lives, etc.), TikTok, Instagram, Facebook y X."
+          : "Download videos from YouTube (Shorts, Lives, etc.), TikTok, Instagram, Facebook and X."}
       </p>
 
       <div className="bg-gray-50 rounded-xl p-5 space-y-4">
