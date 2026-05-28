@@ -333,7 +333,8 @@ app.post('/api/download', async (req, res) => {
         try { unlinkSync(join(tempDir, f)); } catch {}
       }
     } catch {}
-    res.status(500).json({ error: 'Failed to process video' });
+    const clientError = err.stderr?.substring(0, 500) || err.message || 'Failed to process video';
+    res.status(500).json({ error: clientError });
   }
 });
 
