@@ -41,7 +41,7 @@ const PLATFORMS = [
   { id: "tiktok", Icon: TikTokIcon, label: "TikTok", labelEs: "TikTok" },
   { id: "instagram", Icon: InstagramIcon, label: "Instagram", labelEs: "Instagram" },
   { id: "facebook", Icon: FacebookIcon, label: "Facebook", labelEs: "Facebook" },
-  { id: "twitter", Icon: XIcon, label: "X / Twitter", labelEs: "X / Twitter" },
+  { id: "twitter", Icon: XIcon, label: "X", labelEs: "X" },
 ];
 
 export default function VideoDownloader() {

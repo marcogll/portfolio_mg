@@ -45,7 +45,7 @@ docker compose up --build
 - TikTok
 - Instagram (Reels, Posts, Stories)
 - Facebook (Videos, Reels)
-- X / Twitter
+- X
 
 ## Notes
 
