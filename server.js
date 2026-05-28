@@ -277,7 +277,7 @@ app.post('/api/download', async (req, res) => {
 
   try {
     const { stdout: metaJson, stderr: metaStderr } = await execAsync(
-      `${YTDLP_PATH} --dump-json --no-download "${url}"`,
+      `${YTDLP_PATH} --js-runtimes node --dump-json --no-download "${url}"`,
       { timeout: 30000, maxBuffer: 20 * 1024 * 1024 }
     );
 
@@ -289,7 +289,7 @@ app.post('/api/download', async (req, res) => {
     }
 
     const { stdout: downloadOutput, stderr: downloadStderr } = await execAsync(
-      `${YTDLP_PATH} --no-playlist -f "best[ext=mp4]/best" -o "${tempFile}" --merge-output-format mp4 "${url}"`,
+      `${YTDLP_PATH} --js-runtimes node --no-playlist -f "best[ext=mp4]/best" -o "${tempFile}" --merge-output-format mp4 "${url}"`,
       { timeout: 120000, maxBuffer: 10 * 1024 * 1024 }
     );
 
