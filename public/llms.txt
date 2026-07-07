@@ -1,0 +1,30 @@
+# Marco Gallegos - Portfolio
+
+> Process Engineer & Developer specialized in automation, web development, and process optimization.
+
+## About
+
+Marco Gallegos is a Process Engineer focused on analyzing and improving business processes. He also develops websites, web applications, and marketing solutions using modern technologies.
+
+## Services
+
+- Process Optimization for SMBs
+- Web Development (React, Vite, Tailwind)
+- Hiring Automation
+- AI Survey Services
+- Marketing Campaigns
+- Construction Supervision
+
+## Contact
+
+- Email: marco@soul23.mx
+- LinkedIn: https://www.linkedin.com/in/marcogll/
+- GitHub: https://github.com/marcogll
+- Twitter: https://x.com/marcog_mx
+- Instagram: https://instagram.com/soul23.mx
+
+## Website
+
+- URL: https://marco.soul23.mx
+- Built with: React, Vite, Tailwind CSS
+- Language: Spanish & English

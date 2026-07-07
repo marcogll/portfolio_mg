@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://marco.soul23.mx/sitemap.xml
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /

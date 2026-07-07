@@ -1,0 +1,62 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Marco Gallegos",
+  "jobTitle": "Process Engineer & Developer",
+  "description": "Process Engineer focused on analyzing and improving business processes. Developer of websites, web applications, and marketing solutions.",
+  "url": "https://marco.soul23.mx",
+  "email": "marco@soul23.mx",
+  "sameAs": [
+    "https://www.linkedin.com/in/marcogll/",
+    "https://github.com/marcogll",
+    "https://x.com/marcog_mx",
+    "https://instagram.com/soul23.mx"
+  ],
+  "knowsAbout": [
+    "Process Optimization",
+    "Web Development",
+    "React",
+    "JavaScript",
+    "Automation",
+    "Marketing",
+    "Construction Supervision"
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Services",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Process Optimization",
+          "description": "Administrative and operational process optimization for SMBs"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Web Development",
+          "description": "Websites and web apps built with modern tech"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Hiring Automation",
+          "description": "Local business hiring automation"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "AI Survey Service",
+          "description": "Survey service with AI and instant feedback"
+        }
+      }
+    ]
+  }
+}
