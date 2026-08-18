@@ -1,18 +1,39 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/marcogll/mg_data_storage/refs/heads/main/soul23/logo/soul23_logo.svg" width="110" alt="Soul23">
+  <a href="https://soul23.mx">
+    <picture>
+      <source
+        media="(prefers-color-scheme: dark)"
+        srcset="https://raw.githubusercontent.com/marcogll/mg_data_storage/refs/heads/main/soul23/logo/soul23_logo_wh.png">
+      <source
+        media="(prefers-color-scheme: light)"
+        srcset="https://raw.githubusercontent.com/marcogll/mg_data_storage/refs/heads/main/soul23/logo/soul23_logo_blk.png">
+      <img
+        src="https://raw.githubusercontent.com/marcogll/mg_data_storage/refs/heads/main/soul23/logo/soul23_logo_blk.png"
+        width="110"
+        alt="Soul:23">
+    </picture>
+  </a>
 </p>
 
 <h1 align="center">Portfolio Mg</h1>
 
 <p align="center">
-  Sitio web corporativo para presencia digital 🌐
+  Sitio web corporativo y portfolio con servidor Express y panel de administración.
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Docker-3a3a3a?style=flat-square&logo=docker&logoColor=white" alt="Docker">
-  <img src="https://img.shields.io/badge/Python-3a3a3a?style=flat-square&logo=python&logoColor=white" alt="Python">
-  <img src="https://img.shields.io/badge/React-3a3a3a?style=flat-square&logo=react&logoColor=white" alt="React">
+  <img src="https://img.shields.io/badge/React-3a3a3a?style=flat-square&logo=react&logoColor=white">
+  <img src="https://img.shields.io/badge/Docker-3a3a3a?style=flat-square&logo=docker&logoColor=white">
+  <img src="https://img.shields.io/badge/Python-3a3a3a?style=flat-square&logo=python&logoColor=white">
 </p>
+
+---
+
+## Description
+
+Sitio web corporativo para presencia digital: landing con imagenes del salon y seccion de noticias, panel de administracion protegido por login para gestionar las imagenes y noticias, y endpoint de API para consumir el contenido.
+
+Construido con React, Express y Python, servido en Docker.
 
 ## Quick Start
 
