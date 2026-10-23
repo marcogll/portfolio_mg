@@ -3,7 +3,7 @@ import { useLanguage } from "../context/LanguageContext";
 import { PROJECTS } from "../data/projects";
 
 const ProjectImage = memo(({ imageUrl, name }) => (
-  <div className="w-16 h-16 flex-shrink-0 rounded-xl overflow-hidden items-center justify-center border border-gray-100 flex shadow-sm bg-white">
+  <div className="w-16 h-16 shrink-0 rounded-xl overflow-hidden items-center justify-center border border-gray-100 flex shadow-sm bg-white">
     <img className="w-10 h-10 object-contain" src={imageUrl} alt={name} loading="lazy" />
   </div>
 ));

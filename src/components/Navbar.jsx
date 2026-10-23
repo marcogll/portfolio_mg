@@ -37,7 +37,7 @@ export default function Navbar() {
     <>
       <header className="py-2 px-2 fixed top-0 left-0 w-full z-40">
         <div className="mx-auto max-w-xl ">
-          <div className="backdrop-filter backdrop-blur-lg bg-white bg-opacity-40 rounded-xl flex items-center justify-between shadow-md">
+          <div className="backdrop-filter backdrop-blur-lg bg-white/40 rounded-xl flex items-center justify-between shadow-md">
             <div className="flex gap-x-3 px-5 py-2">
               <NavLink
                 to="/"

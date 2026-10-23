@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { getConfigData } from "../data/configReader";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";

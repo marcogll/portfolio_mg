@@ -107,7 +107,7 @@ export default function QrGenerator() {
     qrRef.current.innerHTML = "";
 
     try {
-      const qr = new EasyQRCodeJS(qrRef.current, {
+      new EasyQRCodeJS(qrRef.current, {
         text: data,
         width: 256,
         height: 256,

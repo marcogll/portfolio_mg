@@ -25,7 +25,7 @@ const profileImages = [mg1, mg3, mg4, mg5, mg6, mg7, mg8, mg10, mg11, mg12, mg13
 
 export default function Profile() {
   const configData = getConfigData() || {};
-  const { t, toggleLang, lang } = useLanguage();
+  const { t, lang } = useLanguage();
   const [showContact, setShowContact] = useState(false);
   const [showCv, setShowCv] = useState(false);
   const [profile, setProfile] = useState(profileOriginal);
