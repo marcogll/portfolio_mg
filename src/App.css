@@ -1,8 +1,10 @@
-* {
-  margin: 0;
-  padding: 0;
-}
-body {
-  background: #eceff3;
-  color: #353849;
+/*
+ * Tailwind 4 pone sus utilidades en @layer, así que el CSS sin capa las
+ * sobrescribe (esto rompía mx-auto/paddings). Mantener todo dentro de @layer base.
+ */
+@layer base {
+  body {
+    background: #eceff3;
+    color: #353849;
+  }
 }
