@@ -2,7 +2,7 @@ FROM node:24-alpine
 
 # Pin yt-dlp to a known version so image builds are reproducible.
 # Bump this ARG (and rebuild) to update the downloader.
-ARG YTDLP_VERSION=2026.10.21
+ARG YTDLP_VERSION=2026.10.26
 
 RUN apk add --no-cache python3 py3-pip ffmpeg && \
     pip install --no-cache-dir --break-system-packages --root-user-action=ignore \
